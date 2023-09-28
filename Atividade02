@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+// Função para verificar se um número é primo
+int ehPrimo(int num) {
+    if (num <= 1) return 0; // 0 e 1 não são primos
+    if (num <= 3) return 1; // 2 e 3 são primos
+
+    // Verificar se o número é divisível por algum número de 2 até a sua raiz quadrada
+    for (int i = 2; i * i <= num; i++) {
+        if (num % i == 0) return 0; // Não é primo
+    }
+    return 1; // É primo
+}
+
+// Função para encontrar a decomposição como a soma de dois primos
+void encontrarDecomposicaoEmPrimos(int numero) {
+    int encontrado = 0;
+
+    for (int i = 2; i <= numero / 2; i++) {
+        if (ehPrimo(i) && ehPrimo(numero - i)) {
+            printf("%d = %d + %d\n", numero, i, numero - i);
+            encontrado = 1;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Nao foi possível encontrar a decomposicao como a soma de dois numeros primos para %d.\n", numero);
+    }
+}
+
+int main() {
+    int numero;
+
+    printf("Digite um numero inteiro maior do que 2: ");
+    scanf("%d", &numero);
+
+    if (numero <= 2) {
+        printf("O numero deve ser maior do que 2.\n");
+        return 1;
+    }
+
+    encontrarDecomposicaoEmPrimos(numero);
+
+    return 0;
+}
